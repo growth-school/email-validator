@@ -1,0 +1,83 @@
+{
+  "info": {
+    "_postman_id": "c7f91a2b-prod-email-validator",
+    "name": "Email Validator API (Production)",
+    "description": "Production API Gateway in **ap-south-1** (Mumbai).\n\n**Base URL** (no trailing slash): `https://zo242amucl.execute-api.ap-south-1.amazonaws.com/prod`\n\nUpdate the collection variable **`baseUrl`** if you redeploy and the API id or stage changes.\n\nSee also: `email-validator.postman_collection.json` for local/offline with `{{baseUrl}}` + `{{stage}}`.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://zo242amucl.execute-api.ap-south-1.amazonaws.com/prod"
+    }
+  ],
+  "item": [
+    {
+      "name": "Validate single email",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"user@example.com\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{baseUrl}}/validate",
+        "description": "POST — full validation for one address. Response: `email`, `valid`, `score`, `checks`, `reason`, plus extended blocks (`email_deliverability`, `email_quality`, etc.)."
+      },
+      "response": []
+    },
+    {
+      "name": "Validate batch (max 100)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"emails\": [\n    \"user@example.com\",\n    \"other@domain.org\"\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{baseUrl}}/validate/batch",
+        "description": "POST — up to 100 emails. Response: `results` (same shape as single validate per item) and `summary` (`total`, `valid`, `invalid`, `risky`)."
+      },
+      "response": []
+    },
+    {
+      "name": "CORS preflight (OPTIONS)",
+      "request": {
+        "method": "OPTIONS",
+        "header": [
+          {
+            "key": "Access-Control-Request-Method",
+            "value": "POST"
+          },
+          {
+            "key": "Access-Control-Request-Headers",
+            "value": "Content-Type"
+          }
+        ],
+        "url": "{{baseUrl}}/validate",
+        "description": "OPTIONS — verify `Access-Control-*` headers on API Gateway."
+      },
+      "response": []
+    }
+  ]
+}

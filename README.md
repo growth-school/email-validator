@@ -292,7 +292,7 @@ npm test                 # Jest
 npm run offline          # Serverless offline
 ```
 
-Postman: `postman/email-validator.postman_collection.json`
+Postman: `postman/email-validator.postman_collection.json` (local) and `postman/email-validator.production.postman_collection.json` (API Gateway URL pre-filled).
 
 ---
 
