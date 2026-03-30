@@ -1,0 +1,87 @@
+{
+  "info": {
+    "_postman_id": "a1b2c3d4-email-validator",
+    "name": "Email Validator API",
+    "description": "HTTP API for the email-validator Lambda (Serverless).\n\n**Setup**\n1. Import this collection.\n2. Edit collection variables:\n   - **baseUrl** — e.g. `http://localhost:3000` for `serverless offline`, or your API Gateway origin without trailing slash.\n   - **stage** — Serverless stage (default `dev`). API Gateway paths are `/{stage}/validate`.\n\n**Deploy example**  \n`https://{api-id}.execute-api.us-east-1.amazonaws.com/dev/validate`\n\n**Local example**  \n`npx serverless offline` → often `http://localhost:3000/dev/validate` (port may differ).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000"
+    },
+    {
+      "key": "stage",
+      "value": "dev"
+    }
+  ],
+  "item": [
+    {
+      "name": "Validate single email",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"email\": \"user@example.com\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{baseUrl}}/{{stage}}/validate",
+        "description": "Runs the full validation pipeline for one address and returns `valid`, `score`, `checks`, and `reason`."
+      },
+      "response": []
+    },
+    {
+      "name": "Validate batch (max 100)",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"emails\": [\n    \"user@example.com\",\n    \"other@domain.org\"\n  ]\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "{{baseUrl}}/{{stage}}/validate/batch",
+        "description": "Validates up to **100** emails per request. Response includes `results` and `summary` (`total`, `valid`, `invalid`, `risky`)."
+      },
+      "response": []
+    },
+    {
+      "name": "CORS preflight (OPTIONS)",
+      "request": {
+        "method": "OPTIONS",
+        "header": [
+          {
+            "key": "Access-Control-Request-Method",
+            "value": "POST"
+          },
+          {
+            "key": "Access-Control-Request-Headers",
+            "value": "Content-Type"
+          }
+        ],
+        "url": "{{baseUrl}}/{{stage}}/validate",
+        "description": "Optional: verify CORS headers from API Gateway / serverless-offline."
+      },
+      "response": []
+    }
+  ]
+}

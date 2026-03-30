@@ -1,0 +1,30 @@
+{
+  "name": "email-validator",
+  "version": "1.0.0",
+  "license": "MIT",
+  "private": true,
+  "description": "Email validation Lambda microservice",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "offline": "serverless offline",
+    "deploy": "serverless deploy --region ap-south-1",
+    "deploy:dev": "serverless deploy --stage dev --region ap-south-1",
+    "deploy:prod": "serverless deploy --stage prod --region ap-south-1",
+    "remove:prod": "serverless remove --stage prod --region ap-south-1",
+    "remove:dev": "serverless remove --stage dev --region ap-south-1",
+    "info": "serverless info --verbose --region ap-south-1"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "clearMocks": true,
+    "testMatch": ["**/tests/**/*.test.js"]
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "jest": "^29.0.0",
+    "serverless": "^3.0.0",
+    "serverless-offline": "^13.0.0"
+  }
+}
